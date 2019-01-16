@@ -30,6 +30,8 @@ function addPopup(feature, layer) {
     + "Address: " + feature.properties.address + "<br>"
     + "Parking: " + feature.properties.parking + "<br>"
     + "Water: " + feature.properties["drink water"] + "<br>"
+    + "Restrooms: " + feature.properties.restrooms + "<br>"
+    + "Kiosk: " + feature.properties.kiosk + "<br>"
     + '</div>';
   layer.bindPopup(pop);
 }
