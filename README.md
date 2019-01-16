@@ -1,6 +1,6 @@
 # BoulderTrailsExample
 
-** Boulder Hiking Trails - Code example **
+**Boulder Hiking Trails Interactive Map - Code example**
 
 ---
 
