@@ -28,7 +28,8 @@ function addMarker(feature, latlng) {
 function addPopup(feature, layer) {
   var pop = "<div><b>" + feature.properties.name + "</b><br>"
     + "Address: " + feature.properties.address + "<br>"
-    + "</b>Parking: " + feature.properties.parking + "<br>"
+    + "Parking: " + feature.properties.parking + "<br>"
+    + "Water: " + feature.properties["drink water"] + "<br>"
     + '</div>';
   layer.bindPopup(pop);
 }
