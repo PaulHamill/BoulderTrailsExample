@@ -8,6 +8,15 @@ var tileSrvAttribution =
 var map,
   map_center = [40.01, -105.27];
 
+function loadCSVData() {
+  Papa.parse("data/OSMPTrailheads.csv", {
+    download: true,
+    complete: function(results) {
+      console.log(results.data);
+    }
+  });
+}
+
 function loadTrailDataIntoMap() {
   var trailLayer = new L.geoJson(geoData, {
     pointToLayer: addMarker,
@@ -46,6 +55,7 @@ $("document").ready(function() {
     success: function(data) {
       console.log(data);
       geoData = data;
+      loadCSVData();
       loadTrailDataIntoMap();
     },
     error: function(jqXHR, status, err) {
