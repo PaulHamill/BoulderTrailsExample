@@ -1,20 +1,30 @@
-// GeoJSON Trail Data URL
+// GeoJSON Trail Data
 var dataUrl = "data/trailheads.geojson",
   geoData;
+// CSV Trail Data
+var csvUrl = "data/OSMPTrailheads.csv",
+  csvData;
 // Stamen Terrain Tiles
 var tileSrvUrl = "http://tile.stamen.com/terrain/{z}/{x}/{y}.png";
-var tileSrvAttribution =
+var tileSrvAttrib =
   "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA.";
 var map,
   map_center = [40.01, -105.27];
 
 function loadCSVData() {
-  Papa.parse("data/OSMPTrailheads.csv", {
+  Papa.parse(csvUrl, {
     download: true,
     header: true,
     complete: function(results) {
-      console.log(results.data);
+      // console.log(results.data);
+      csvData = results.data;
     }
+  });
+}
+
+function mergeData() {
+  $.each(csvData, function(k, value) {
+    console.log(value);
   });
 }
 
@@ -57,6 +67,7 @@ $("document").ready(function() {
       console.log(data);
       geoData = data;
       loadCSVData();
+      mergeData();
       loadTrailDataIntoMap();
     },
     error: function(jqXHR, status, err) {
@@ -73,6 +84,6 @@ $("document").ready(function() {
   var baseLayer = new L.TileLayer(tileSrvUrl, {
     maxZoom: 18,
     subdomains: ["otile1", "otile2", "otile3", "otile4"],
-    attribution: tileSrvAttribution
+    attribution: tileSrvAttrib
   }).addTo(map);
 });
