@@ -10,8 +10,8 @@ var map,
 
 function loadTrailDataIntoMap() {
   var trailLayer = new L.geoJson(geoData, {
-    pointToLayer: addMarker // ,
-    // onEachFeature: addCamPopup
+    pointToLayer: addMarker,
+    onEachFeature: addPopup
   }).addTo(map);
 }
 
