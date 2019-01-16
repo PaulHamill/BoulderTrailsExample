@@ -19,13 +19,16 @@ body {
   box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.5);
 }
 .content {
-  margin-top: 60px;
-}
-h2 {
-  margin-left: 100px;
+  margin: 60px 100px 0 100px;
 }
 #map {
   height: 600px;
-  margin: 0 100px;
   border: 1px solid #777;
+}
+/* Mobile devices */
+@media screen and (max-width: 767px) {
+  .content {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 }
