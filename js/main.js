@@ -11,6 +11,7 @@ var map,
 function loadCSVData() {
   Papa.parse("data/OSMPTrailheads.csv", {
     download: true,
+    header: true,
     complete: function(results) {
       console.log(results.data);
     }
