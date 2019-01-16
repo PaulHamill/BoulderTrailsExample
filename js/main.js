@@ -16,8 +16,9 @@ function loadCSVData() {
     download: true,
     header: true,
     complete: function(results) {
-      // console.log(results.data);
+      console.log(results.data);
       csvData = results.data;
+      mergeData();
     }
   });
 }
@@ -26,6 +27,7 @@ function mergeData() {
   $.each(csvData, function(k, value) {
     console.log(value);
   });
+  loadTrailDataIntoMap();
 }
 
 function loadTrailDataIntoMap() {
@@ -67,8 +69,6 @@ $("document").ready(function() {
       console.log(data);
       geoData = data;
       loadCSVData();
-      mergeData();
-      loadTrailDataIntoMap();
     },
     error: function(jqXHR, status, err) {
       console.log("Error getting data");
