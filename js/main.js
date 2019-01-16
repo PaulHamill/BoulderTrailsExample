@@ -1,11 +1,10 @@
-var dataUrl =
-  "https://www-static.bouldercolorado.gov/docs/opendata/OpenTrails/OSMP_trailheads.geojson";
+var dataUrl = "data/trailheads.geojson";
 
 $("document").ready(function() {
   $.ajax({
     type: "GET",
     url: dataUrl,
-    dataType: "jsonp",
+    dataType: "json",
     success: function(data) {
       console.log(data);
     },
