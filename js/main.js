@@ -19,6 +19,7 @@ function loadCSVData() {
       console.log(results.data);
       csvData = results.data;
       mergeData();
+      loadTrailDataIntoMap();
     }
   });
 }
@@ -26,8 +27,15 @@ function loadCSVData() {
 function mergeData() {
   $.each(csvData, function(k, value) {
     console.log(value);
+    for (var i in geoData) {
+      var d = geoData[i];
+      if (value.Address == d.address) {
+        console.log('Location Address Match: '+value.Address);
+        $.extend(d, value);
+        break;
+      }
+    }    
   });
-  loadTrailDataIntoMap();
 }
 
 function loadTrailDataIntoMap() {
