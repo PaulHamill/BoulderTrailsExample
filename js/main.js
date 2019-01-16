@@ -26,15 +26,15 @@ function loadCSVData() {
 
 function mergeData() {
   $.each(csvData, function(k, value) {
-    console.log(value);
-    for (var i in geoData) {
-      var d = geoData[i];
-      if (value.Address == d.address) {
-        console.log('Location Address Match: '+value.Address);
+    var match = false;
+    for (var i in geoData.features) {
+      var d = geoData.features[i].properties;
+      if (value.AccessID == d.id) {
+        match = true;
         $.extend(d, value);
         break;
       }
-    }    
+    }
   });
 }
 
@@ -59,9 +59,12 @@ function addPopup(feature, layer) {
   var pop = "<div><b>" + feature.properties.name + "</b><br>"
     + "Address: " + feature.properties.address + "<br>"
     + "Parking: " + feature.properties.parking + "<br>"
-    + "Water: " + feature.properties["drink water"] + "<br>"
+    + (typeof feature.properties.BikeTrail!=='undefined'?"Bike Trail: "+feature.properties.BikeTrail+"<br>":'')
+    + (typeof feature.properties.FISHING!=='undefined'?"Fishing: "+feature.properties.FISHING+"<br>":'')
+    + (typeof feature.properties.HorseTrail!=='undefined'?"Horse Trail: "+feature.properties.HorseTrail+"<br>":'')
+    + (typeof feature.properties.PICNIC!=='undefined'?"Picnic: "+feature.properties.PICNIC+"<br>":'')
+    + "Drinking Water: " + feature.properties["drink water"] + "<br>"
     + "Restrooms: " + feature.properties.restrooms + "<br>"
-    + "Kiosk: " + feature.properties.kiosk + "<br>"
     + '</div>';
   layer.bindPopup(pop);
 }
