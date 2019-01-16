@@ -21,8 +21,11 @@ body {
 .content {
   margin-top: 60px;
 }
+h2 {
+  margin-left: 100px;
+}
 #map {
-  height: 500px;
+  height: 600px;
   margin: 0 100px;
   border: 1px solid #777;
 }

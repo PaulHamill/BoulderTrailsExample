@@ -11,8 +11,8 @@ var map,
 function addMarker(feature, latlng) {
   return new L.Marker(latlng, {
     icon: L.icon({
-      iconUrl: "img/marker-blue.png",
-      iconSize: [8, 8]
+      iconUrl: "img/marker-red.png",
+      iconSize: [16, 22]
     }),
     draggable: false
   });
