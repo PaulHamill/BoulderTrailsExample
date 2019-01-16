@@ -8,6 +8,13 @@ var tileSrvAttribution =
 var map,
   map_center = [40.01, -105.27];
 
+function loadTrailDataIntoMap() {
+  var trailLayer = new L.geoJson(geoData, {
+    pointToLayer: addMarker // ,
+    // onEachFeature: addCamPopup
+  }).addTo(map);
+}
+
 function addMarker(feature, latlng) {
   return new L.Marker(latlng, {
     icon: L.icon({
@@ -18,13 +25,15 @@ function addMarker(feature, latlng) {
   });
 }
 
-function loadTrailDataIntoMap() {
-  var trailLayer = new L.geoJson(geoData, {
-    pointToLayer: addMarker // ,
-    // onEachFeature: addCamPopup
-  }).addTo(map);
+function addPopup(feature, layer) {
+  var pop = "<div><b>" + feature.properties.name + "</b><br>"
+    + "Address: " + feature.properties.address + "<br>"
+    + "</b>Parking: " + feature.properties.parking + "<br>"
+    + '</div>';
+  layer.bindPopup(pop);
 }
 
+// doc ready event
 $("document").ready(function() {
   // get GeoJSON data
   $.ajax({
