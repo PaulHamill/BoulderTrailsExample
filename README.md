@@ -9,9 +9,9 @@ This code example shows Boulder hiking trail data downloaded from the Open Space
   
 Uses:  
 [Leaflet map component](https://leafletjs.com)  
+[Papa Parse](https://www.papaparse.com) CSV Parser Javascript library  
 Map tiles from [Stamen Design](http://maps.stamen.com)  
 Map data from [OpenStreetMap](https://www.openstreetmap.org)  
 The map tiles and map data are licensed by Creative Commons licenses. This data is open source and freely reusable with accreditation.  
-[Papa Parse](https://www.papaparse.com) CSV Parser Javascript library  
 
 By Paul Hamill
