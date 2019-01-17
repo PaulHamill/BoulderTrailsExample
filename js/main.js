@@ -17,7 +17,8 @@ function loadCSVData() {
     download: true,
     header: true,
     complete: (results)=>{
-      console.log(results.data);
+      // console.log(results.data);
+      if (results.errors) console.log("Error getting CSV data");
       csvData = results.data;
       mergeData();
       loadTrailDataIntoMap(geoData);
@@ -26,17 +27,19 @@ function loadCSVData() {
 }
 
 function mergeData() {
-  $.each(csvData, (k, value)=>{
-    var match = false;
+  for (var j in csvData) {
+    var value = csvData[j],
+        match = false;
     for (var i in geoData.features) {
       var d = geoData.features[i].properties;
       if (value.AccessID == d.id) {
         match = true;
-        $.extend(d, value);
+        geoData.features[i].properties = $.extend(d, value);
         break;
       }
     }
-  });
+  };
+  console.log(csvData);
 }
 
 function loadTrailDataIntoMap(gdata) {
@@ -45,6 +48,38 @@ function loadTrailDataIntoMap(gdata) {
     pointToLayer: addMarker,
     onEachFeature: addPopup
   }).addTo(map);
+}
+
+function filterTrails() {
+  var attribs = [];
+  $('input[type=checkbox]').each(function(){
+    if ($(this).is(':checked')) {
+      attribs.push($(this).val());
+    }
+  });
+  var gdata;
+  if (attribs.length == 0) {
+    gdata = geoData;
+  } else {
+    gdata = {
+      "features": [],
+      "type": "FeatureCollection"
+    };
+    for (var i in geoData.features) {
+      var f = geoData.features[i],
+          match = false;
+      for (var attrib in f.properties) {
+        var value = f.properties[attrib];
+        if (!value) continue;
+        if (attribs.includes(attrib) && value.toLowerCase()=='yes') {
+          match = true;
+          break;
+        }
+      }
+      if (match) gdata.features.push(f);
+    }
+  }
+  loadTrailDataIntoMap(gdata);
 }
 
 function addMarker(feature, latlng) {
@@ -63,7 +98,6 @@ function addPopup(feature, layer) {
     + "Parking: " + feature.properties.parking + "<br>"
     + (typeof feature.properties.BikeTrail!=='undefined'?"Bike Trail: "+feature.properties.BikeTrail+"<br>":'')
     + (typeof feature.properties.FISHING!=='undefined'?"Fishing: "+feature.properties.FISHING+"<br>":'')
-    + (typeof feature.properties.HorseTrail!=='undefined'?"Horse Trail: "+feature.properties.HorseTrail+"<br>":'')
     + (typeof feature.properties.PICNIC!=='undefined'?"Picnic: "+feature.properties.PICNIC+"<br>":'')
     + "Drinking Water: " + feature.properties["drink water"] + "<br>"
     + "Restrooms: " + feature.properties.restrooms + "<br>"
@@ -73,22 +107,24 @@ function addPopup(feature, layer) {
 
 // doc ready event
 $("document").ready(()=>{
+
   // get GeoJSON data
   $.ajax({
     type: "GET",
     url: dataUrl,
     dataType: "json",
     success: (data)=>{
-      console.log(data);
+      // console.log(data);
       geoData = data;
       loadCSVData();
     },
     error: (jqXHR, status, err)=>{
-      console.log("Error getting data");
+      console.log("Error getting GeoJSON data");
       console.log(status);
       console.log(err);
     }
   });
+
   // create Leaflet map
   map = new L.map("map", {
     minZoom: 5,
@@ -99,9 +135,10 @@ $("document").ready(()=>{
     subdomains: ["otile1", "otile2", "otile3", "otile4"],
     attribution: tileSrvAttrib
   }).addTo(map);
-  // filter checkbix click handler
-  $('input[type=checkbox]').on('change', (event)=>{
-    var cb = $(event.target);
-    console.log(cb.is(':checked'));
+
+  // filter checkbox click handler
+  $('input[type=checkbox]').on('change', ()=>{
+    filterTrails();
   });
+
 });
