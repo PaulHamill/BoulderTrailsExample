@@ -3,7 +3,7 @@
 **Boulder Hiking Trails Interactive Map**
 
 ---
-View the [Boulder Trails](http://trails.empisys.com/) demo online at [trails.empisys.com](http://trails.empisys.com/)
+View the [Boulder Trails](http://trails.empisys.com/) demo online at [trails.empisys.com](http://trails.empisys.com/).
 
 This code example shows Boulder hiking trail data downloaded from the Open Space and Mountain Parks site, [OSMP Trailheads](https://bouldercolorado.gov/open-data/city-of-boulder-osmp-trailheads/).  
   
