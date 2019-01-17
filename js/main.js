@@ -41,7 +41,7 @@ function mergeData(csvData) {
       }
     }
   };
-  console.log(geoData);
+  // console.log(geoData);
 }
 
 function loadTrailDataIntoMap(gdata) {
