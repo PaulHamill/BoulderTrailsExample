@@ -25,6 +25,9 @@ body {
 .content>h2 {
   margin-bottom: 8px;
 }
+.filter {
+  margin-bottom: 8px;
+}
 #map {
   height: 600px;
   border: 1px solid #777;
