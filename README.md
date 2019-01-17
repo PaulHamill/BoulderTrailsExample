@@ -1,6 +1,7 @@
 # BoulderTrailsExample
 
-**Boulder Hiking Trails Interactive Map**
+**Boulder Hiking Trails Interactive Map**  
+By Paul Hamill  
 
 ---
 View the [Boulder Trails](http://trails.empisys.com/) demo online at [trails.empisys.com](http://trails.empisys.com/).
@@ -13,5 +14,3 @@ Uses:
 Map tiles from [Stamen Design](http://maps.stamen.com)  
 Map data from [OpenStreetMap](https://www.openstreetmap.org)  
 The map tiles and map data are licensed by Creative Commons licenses. This data is open source and freely reusable with accreditation.  
-
-By Paul Hamill
