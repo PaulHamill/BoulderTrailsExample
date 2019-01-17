@@ -99,7 +99,9 @@ $("document").ready(()=>{
     subdomains: ["otile1", "otile2", "otile3", "otile4"],
     attribution: tileSrvAttrib
   }).addTo(map);
-  $('input[type=checkbox]').click((event)=>{
-    console.log($(this).is(":checked"));
+  // filter checkbix click handler
+  $('input[type=checkbox]').on('change', (event)=>{
+    var cb = $(event.target);
+    console.log(cb.is(':checked'));
   });
 });
