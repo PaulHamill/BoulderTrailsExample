@@ -9,23 +9,24 @@ var tileSrvUrl = "http://tile.stamen.com/terrain/{z}/{x}/{y}.png";
 var tileSrvAttrib =
   "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA.";
 var map,
-  map_center = [40.01, -105.27];
+  map_center = [40.01, -105.27],
+  trailLayer;
 
 function loadCSVData() {
   Papa.parse(csvUrl, {
     download: true,
     header: true,
-    complete: function(results) {
+    complete: (results)=>{
       console.log(results.data);
       csvData = results.data;
       mergeData();
-      loadTrailDataIntoMap();
+      loadTrailDataIntoMap(geoData);
     }
   });
 }
 
 function mergeData() {
-  $.each(csvData, function(k, value) {
+  $.each(csvData, (k, value)=>{
     var match = false;
     for (var i in geoData.features) {
       var d = geoData.features[i].properties;
@@ -38,8 +39,9 @@ function mergeData() {
   });
 }
 
-function loadTrailDataIntoMap() {
-  var trailLayer = new L.geoJson(geoData, {
+function loadTrailDataIntoMap(gdata) {
+  if (trailLayer) trailLayer.clearLayers();
+  trailLayer = new L.geoJson(gdata, {
     pointToLayer: addMarker,
     onEachFeature: addPopup
   }).addTo(map);
@@ -70,18 +72,18 @@ function addPopup(feature, layer) {
 }
 
 // doc ready event
-$("document").ready(function() {
+$("document").ready(()=>{
   // get GeoJSON data
   $.ajax({
     type: "GET",
     url: dataUrl,
     dataType: "json",
-    success: function(data) {
+    success: (data)=>{
       console.log(data);
       geoData = data;
       loadCSVData();
     },
-    error: function(jqXHR, status, err) {
+    error: (jqXHR, status, err)=>{
       console.log("Error getting data");
       console.log(status);
       console.log(err);
@@ -97,4 +99,7 @@ $("document").ready(function() {
     subdomains: ["otile1", "otile2", "otile3", "otile4"],
     attribution: tileSrvAttrib
   }).addTo(map);
+  $('input[type=checkbox]').click((event)=>{
+    console.log($(this).is(":checked"));
+  });
 });
