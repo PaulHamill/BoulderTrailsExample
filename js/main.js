@@ -1,16 +1,16 @@
-// GeoJSON Trail Data
-var dataUrl = "data/trailheads.geojson",
-  geoData;
-// CSV Trail Data
-var csvUrl = "data/OSMPTrailheads.csv",
-  csvData;
+// GeoJSON Trail Data URL
+var dataUrl = "data/trailheads.geojson";
+// CSV Trail Data URL
+var csvUrl = "data/OSMPTrailheads.csv";
 // Stamen Terrain Tiles
-var tileSrvUrl = "http://tile.stamen.com/terrain/{z}/{x}/{y}.png";
-var tileSrvAttrib =
+var tileSrvUrl = "http://tile.stamen.com/terrain/{z}/{x}/{y}.png",
+    tileSrvAttrib =
   "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA.";
-var map,
-  map_center = [40.01, -105.27],
-  trailLayer;
+var map_center = [40.01, -105.27], // Boulder lat/long coords
+    initialZoom = 17, // initial map zoom level
+    trailLayer,
+    geoData,
+    map;
 
 function loadCSVData() {
   Papa.parse(csvUrl, {
@@ -18,15 +18,17 @@ function loadCSVData() {
     header: true,
     complete: (results)=>{
       // console.log(results.data);
-      if (results.errors) console.log("Error getting CSV data");
-      csvData = results.data;
-      mergeData();
+      if (results.errors) {
+        console.log("Error getting CSV data");
+        console.log(results.errors);
+      }
+      mergeData(results.data);
       loadTrailDataIntoMap(geoData);
     }
   });
 }
 
-function mergeData() {
+function mergeData(csvData) {
   for (var j in csvData) {
     var value = csvData[j],
         match = false;
@@ -39,7 +41,7 @@ function mergeData() {
       }
     }
   };
-  console.log(csvData);
+  console.log(geoData);
 }
 
 function loadTrailDataIntoMap(gdata) {
@@ -128,10 +130,10 @@ $("document").ready(()=>{
   // create Leaflet map
   map = new L.map("map", {
     minZoom: 5,
-    maxZoom: 18
+    maxZoom: initialZoom
   }).setView(map_center, 12);
   var baseLayer = new L.TileLayer(tileSrvUrl, {
-    maxZoom: 18,
+    maxZoom: initialZoom ,
     subdomains: ["otile1", "otile2", "otile3", "otile4"],
     attribution: tileSrvAttrib
   }).addTo(map);
